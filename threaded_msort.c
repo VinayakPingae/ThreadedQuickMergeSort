@@ -32,7 +32,7 @@ typedef struct quick_sort {
 }QUICK_ELEMENT; 
  
 
-
+// Calling the quick sort function which will be passed as a thread handler for pthread_create
 void* quick_sort(void *arguments) {
     struct quick_sort *quick_sort = arguments;
 	// Invoking inbuilt quick sort function
@@ -40,7 +40,7 @@ void* quick_sort(void *arguments) {
     pthread_exit(NULL);
     return NULL;
 }
-
+// Calling the divide sort which is nothing but a merge sort function which will be passed as a thread handler for pthread_create
 void* divide_sort(void *arguments) {
 		// Invoking merge sort operation
     struct merge_sort *merge_sort_variable = arguments;
@@ -52,7 +52,7 @@ void* divide_sort(void *arguments) {
 	int j = starting_idx+first; // Checking for the second split
 	int* sorted=malloc(sizeof(int)*(first+second));
 	int l =0,m=0,k=0;
-	
+	// Merge sorting of the file.
 	while(i < (first+starting_idx) && j < (starting_idx+first+second)) {
 		if(a[i] < a [j]) {
 			sorted[k] = a[i];
@@ -150,7 +150,6 @@ int main(int argc, char * argv[])
     printf("\n");
 
 
-	// Add your implementation here ...
     int size_of_splits = data_size/split_num;
     int *start_splits = malloc(sizeof(int)*split_num),start_idx = 0;
     pthread_t *threads;
@@ -161,7 +160,7 @@ int main(int argc, char * argv[])
 		start_splits[i] = size_of_splits;
 	}
     start_splits[i] = (data_size - (split_num-1)*size_of_splits);
-	// Wuick SOrt operation
+	// Quick Sort operation
     printf("\n----- qsort round: %d threads needed -----\n",split_num);
     for (i = 0; i < split_num; i++) { 
 
@@ -203,8 +202,6 @@ int main(int argc, char * argv[])
 		}
 
 		addition_ofall = 0;
-		//size_of_splits_new =  data_size/(split_num_new);
-		
 		if(count != 0) {
 			for(i=0 ; i < split_num_new-1 ;i++) {
 				start_splits[i] = 2*start_splits[i];
